@@ -8,10 +8,11 @@ import panos.awt.WizardLayout;
 
 public class wizPage extends Panel
 {
-	
+
+	public String HelpText[]; // somewhere to store the help text of this page
 	public boolean canFinish; // true if the "finish" button can be clicked in this page
 	private Frame f_Help; // Frame to display when clicking on Help button
-	
+
 	public wizPage ()
 	{
 		setBackground(Color.lightGray);
@@ -30,6 +31,7 @@ public class wizPage extends Panel
 		if (obj instanceof TextArea) add ((TextArea)obj);
 		if (obj instanceof Checkbox) add ((Checkbox)obj);
 		if (obj instanceof Choice) add ((Choice)obj);
+		if (obj instanceof wizButton) add ((wizButton)obj);
 		if (obj instanceof browseButton)
 		{
 			 browseButton bb = (browseButton)obj;

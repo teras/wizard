@@ -1,9 +1,21 @@
 package panos.awt;
 
-import java.awt.*;
+import java.awt.Button;
+import java.awt.Panel;
+import java.awt.Frame;
+import java.awt.Color;
+import java.awt.CardLayout;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Canvas;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 import java.applet.Applet;
 import java.util.Vector;
 
+import panos.awt.WizardListener;
 
 // Wizard classs
 // use the methods in this class to invoke a wizard
@@ -27,11 +39,11 @@ public class Wizard extends Frame
 	private Button b_Cancel ; // button to cancel the wizard
 	private Button b_Help ; // button to display a help frame
 	
-	private Applet caller ;	// pointer to store the current applet, which called
+	private WizardListener caller ;	// pointer to store the current object, which called
 								//  this wizard. This pointer is used in order to
-								// send an event on wizard exit
+								// inform this object of any wizard events.
 
-	public static final int EventId = 7500 ;	// id of event to sent to the parent applet
+	//public static final int EventId = 7500 ;	// id of event to sent to the parent applet
 							// This variable is public, in order to be able to
 							// read this number. I am thinking of a model
 							// to check if it collides with other ids os
@@ -43,13 +55,13 @@ public class Wizard extends Frame
 	private wizImage wiz_img ; // Image tobe displayed on the left of this wizard
 
 	// Constructors for this class
-	public Wizard (Applet apl) // default constructor
+	public Wizard (WizardListener apl) // default constructor
 	{
 		this(apl, 500, 300 );
 	}
 	
 	
-	public Wizard (Applet apl, int xLen, int yLen)
+	public Wizard (WizardListener wl, int xLen, int yLen)
 	{
 		pages = new Vector(0,1);  // only one start page and then increasement +1
 		
@@ -62,54 +74,95 @@ public class Wizard extends Frame
 		
 		addPage (); // Add the first page
 		createFirstCard (xLen, yLen); 	// this is the first page to be added => create layout etc.
-		caller = apl; // set the parent applet, in order to send an event there
+		caller = wl; // set the parent caller, in order to send an event there
+		setActionListeners();
 	}
 
 
+	// Here we try to add the various action listeners for Java 1.1
+	public void setActionListeners ()
+	{
 
-    // Where all the events are handled (look also at action method)
-    public boolean handleEvent(Event evt)
-    {
-		// handleEvent()
-		if (evt.id == Event.ACTION_EVENT && evt.target == b_Cancel)
-		{
-			hide();
-			Event ev = new Event (caller, EventId + 1, this);
-			dispose();
-			caller.handleEvent(ev);
-			return true;
-		}
-		if (evt.id == Event.ACTION_EVENT && evt.target == b_Finish)
-		{
-			hide();
-			Event ev = new Event (caller, EventId, this);
-			dispose();
-			caller.handleEvent(ev);
-			return true;
-		}
-		else if ( evt.id == Event.ACTION_EVENT && evt.target == b_Next )
-		{
-			cards.next(p_Card);
-			currentPage ++;
-			setButtons ( currentPage );
-			return true;
-		}
-		else if ( evt.id == Event.ACTION_EVENT && evt.target == b_Prev )
-		{
-			cards.previous(p_Card);
-			currentPage --;
-			setButtons ( currentPage );
-			return true;
-		}
-		else if ( evt.id == Event.ACTION_EVENT && evt.target == b_Begin )
-		{
-			cards.first(p_Card);
-			currentPage = 1;
-			setButtons ( currentPage );
-			return true;
-		}
-		return false;
-    }
+		b_Begin.addActionListener (new ActionListener ()
+		{ public void actionPerformed (ActionEvent evt)
+			{ clickedBegin (evt); }
+		} );
+ 
+		b_Prev.addActionListener (new ActionListener ()
+		{ public void actionPerformed (ActionEvent evt)
+			{ clickedPrev (evt); }
+		} );
+ 
+		b_Next.addActionListener (new ActionListener ()
+		{ public void actionPerformed (ActionEvent evt)
+			{ clickedNext (evt); }
+		} );
+ 
+		b_Finish.addActionListener (new ActionListener ()
+		{ public void actionPerformed (ActionEvent evt)
+			{ clickedFinish (evt); }
+		} );
+ 
+		b_Cancel.addActionListener (new ActionListener ()
+		{ public void actionPerformed (ActionEvent evt)
+			{ clickedCancel (evt); }
+		} );
+ 
+		b_Help.addActionListener (new ActionListener ()
+		{ public void actionPerformed (ActionEvent evt)
+			{ clickedHelp (evt); }
+		} );
+	}
+
+
+	// Now begin the various handling routines for every button
+
+	private void clickedBegin (ActionEvent ev)
+	{
+		cards.first(p_Card); 
+		currentPage = 1; 
+		setButtons ( currentPage ); 
+		caller.changedPage( currentPage ); 
+	}
+
+	private void clickedPrev (ActionEvent ev)
+	{
+		cards.previous(p_Card); 
+		currentPage --; 
+		setButtons ( currentPage ); 
+		caller.changedPage( currentPage ); 
+	}
+
+	private void clickedNext (ActionEvent ev)
+	{
+		cards.next(p_Card); 
+		currentPage ++; 
+		setButtons ( currentPage );
+		caller.changedPage( currentPage ); 
+	}
+
+	private void clickedFinish (ActionEvent ev)
+	{
+		setVisible(false);
+		dispose(); 
+		caller.clickedFinish();
+	}
+
+	private void clickedCancel (ActionEvent ev)
+	{
+		setVisible(false); 
+		dispose(); 
+		caller.clickedCancel(); 
+	}
+
+	private void clickedHelp (ActionEvent ev)
+	{
+		wizPage wp;
+		String title = "Help for wizard page #" + currentPage;
+		wp = (wizPage)pages.elementAt (currentPage-1);
+		System.out.println ("Help requested");
+		Msgbox msg = new Msgbox (this, title , wp.HelpText );
+	}
 
 
 	// set the condition of the navigation buttons
@@ -118,14 +171,14 @@ public class Wizard extends Frame
 		if ( ! existsPage (page) ) return;	// exit if this page doesn't exist
 
 		// set Next button	
-		if ( page < pages.size() )	b_Next.enable();	else	b_Next.disable();
+		if ( page < pages.size() )	b_Next.setEnabled(true);	else	b_Next.setEnabled(false);
 		// set Previous button
-		if ( page > 1)					b_Prev.enable();	else	b_Prev.disable();
+		if ( page > 1)			b_Prev.setEnabled(true);	else	b_Prev.setEnabled(false);
 		//set Begin button
-		if ( page > 1)					b_Begin.enable(); else	b_Begin.disable();
+		if ( page > 1)			b_Begin.setEnabled(true); else	b_Begin.setEnabled(false);
 		//set Finish button
 		wizPage wp = (wizPage)pages.elementAt(page-1);
-		if ( wp.canFinish )			b_Finish.enable();else	b_Finish.disable();
+		if ( wp.canFinish )		b_Finish.setEnabled(true);else	b_Finish.setEnabled(false);
 	}
 
 	
@@ -135,10 +188,21 @@ public class Wizard extends Frame
 	public void setFinish ( int page, boolean finish)
 	{
 		wizPage wp;
-		if ( existsPage (page) == false ) return; // exit if this page don't exists
+		if ( !existsPage (page) ) return; // exit if this page don't exists
 		wp = (wizPage)pages.elementAt(page-1);
 		wp.canFinish = finish;
 	}		
+
+	// With this method you can specify a special help text, describing the current
+	// wizard page. It gets as input the number of the page which should display this
+	// help text and the actual help text (in a String table)
+	public void setHelpText ( int page, String txt[])
+	{
+		wizPage wp;
+		if ( ! existsPage (page) ) return; // exit if this page don't exists
+		wp = (wizPage)pages.elementAt (page-1);
+		wp.HelpText = txt;
+	}
 
 
 	// With this method you can set the number of pages for this Wizard
@@ -224,17 +288,17 @@ public class Wizard extends Frame
 		p_Nav.add (b_Next);
 		p_Nav.add (b_Finish);
 		p_Nav.add (b_Cancel);
-		// p_Nav.add (b_Help);
+		p_Nav.add (b_Help);
 		
 		Canvas cv = new Canvas ();
 		cv.setBackground(Color.lightGray);
-		cv.resize (15,1);
+		cv.setSize (15,1);
 
 		add ( "Center", p_Card);
 		add ( "South", p_Nav );
 		add ( "East" , cv );
 		setResizable (false) ;
-		resize(xLen, yLen);
+		setSize(xLen, yLen);
 		currentPage = 1;
 	}
 	
@@ -255,15 +319,16 @@ public class Wizard extends Frame
 	// With this method you can add a picture on the left of this wizard
 	public void addPicture ( String s_pic )
 	{
-		wiz_img = new wizImage (s_pic , this, caller);
+		wiz_img = new wizImage (s_pic , this);
 		this.add ("West", wiz_img);		
 	}
 	
-	
-	public void show ()
+
+	// You HAVE to use this method, if you want to properly display the wizard
+	public void displayWizard ()
 	{
 		wizPage wp ;
-		super.show();
+		super.setVisible(true);
 
 		wp = (wizPage)pages.lastElement (); // get last page
 		wp.canFinish = true ; // last page can be "Finish"-ed

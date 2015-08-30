@@ -39,10 +39,6 @@ to run: java WizardExec
 directory tree) to anywhere you want and remember to add this directory to the
 CLASSPATH environmental variable.
 
-  If you see any complaints about a deprecateed API, don't bother. That's
-because this component was written for Java 1.0. In the future I'm planning to
-fix this and transform this component to Java 1.1.
-
 
 Linux / Unix
 ------------
@@ -52,6 +48,12 @@ easier. I don't know if I succeeded. It's my first attempt and I don't know
 well how to use this tool. If you can give me any ideas on how to make it
 better, PLEASE give me a note. Still, you have to edit the Makefile to suit
 your needs. Go to directory src and edit the Makefile found there.
+
+To compile this package type 'make'.
+To run a demo of this package, type 'make run'.
+To delete all source code and temporary files, type 'make clean'.
+Sorry, not 'make install' supported yet.
+
 
 Winblow$ 95
 -----------

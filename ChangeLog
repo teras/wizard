@@ -1,8 +1,21 @@
-The wizard component is rather new
+These are the major changes of the wizard component
+
+02-Sep-98
+V 0.9.0  - Almost all my wishlist is finished (see TODO file). If I manage to
+           create a proper interface for applets and clean up some dirty code
+           I'll release V 1.0 !
+
+01-Sep-98
+V 0.8.2+ - A lot of changes, most of them very importand.
+           Transformation to Java 1.1 finished. Also added interface-driven
+           event handler for the wizard information event. Added ability to
+           display little help messages. From this release onward only Java 
+           V 1.1 compatible and not applet compatible.
 
 30-Aug-98
-V 8.1 - second release -fixed some importand bugs (dealing with the
-        LayoutManager)
+V 0.8.1  - second release -fixed some importand bugs (dealing with the
+           LayoutManager)
 
 10-Jun-98
-V 8.0 - first release of this package
+V 0.8.0  - first release of this package. Java 1.0 compatible, 100% applet
+           compatible.

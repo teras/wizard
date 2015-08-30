@@ -4,8 +4,11 @@
 all:
 	( cd ./src; make all )
 
+stepwise:
+	( cd ./src; make stepwise )
+
 clean:
-	rm -f *~ core
+	rm -f *~ core .directory docs/.directory
 	( cd ./src; make clean )
 
 run:

@@ -1,15 +1,14 @@
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-   <META NAME="Generator" CONTENT="Microsoft Word 97">
-   <META NAME="GENERATOR" CONTENT="Mozilla/4.04j2 [en] (X11; I; Linux 2.0.35 i686) [Netscape]">
    <META NAME="Author" CONTENT="Teras">
-   <TITLE>USE OF JAVA WIZARD V 1</TITLE>
+   <META NAME="Keywords" CONTENT="wizard, java, developing, developer, component">
+   <TITLE>USE OF JAVA WIZARD V 0.9.0</TITLE>
 </HEAD>
 <BODY>
 
 <CENTER><A NAME="TOP"></A><B><U><FONT FACE="Arial"><FONT SIZE=+1>USAGE
-OF JAVA WIZARD V 0.8</FONT></FONT></U></B></CENTER>
+OF JAVA WIZARD V 0.9.0</FONT></FONT></U></B></CENTER>
 
 
 <P><B><I><FONT FACE="Arial">&nbsp;</FONT></I></B>
@@ -17,20 +16,30 @@ OF JAVA WIZARD V 0.8</FONT></FONT></U></B></CENTER>
 <P><B><I><FONT FACE="Arial">1. General Info</FONT></I></B>
 
 <P>This project is an attempt to bring the Wizard feature of a (well know)
-OS to the Java environment. It is a package. It is not a self runnable
-application or applet. Instead you have to do some programming yourself
-in order to display this Wizard.
+commercial OS to the Java environment. It is a package. It is not a self
+runnable application or applet. Instead you have to do some programming
+yourself in order to display this component.
 
 <P>All these mean that you can use it like every Java AWT component. It
 is very easy to use and if you know a little bit about Java and even less
 about AWT you can create any wizard you want.
+<BR>&nbsp;
 
-<P>&nbsp;
+<P>&nbsp;<I><U><FONT COLOR="#FF6666"><FONT SIZE=+2>WARNING!!!!!!!!</FONT></FONT></U></I>
+<BR>&nbsp;
+<BR>The API interface of this component has STRONGLY changed since V 0.8.1.
+<BR>IT IS NO LONGER COMPATIBLE WITH THE OLD EVENT MODULE.
+<BR>FURTHERMORE IT'S <B>ONLY</B> JAVA 1.1 COMPATIBLE.
+<BR>A NEW INTERFACE IS PROVIDED IN ORDER TO COMMUNICATE WITH THE OWNER
+APPLICATION.
+<BR>Please se WizardListener interface for more info.
+<BR>&nbsp;
 
 <P><A NAME="INSTALL"></A><B><I><FONT FACE="Arial">2. Installation Instructions</FONT></I></B>
 
 <P>You have to do some manual work in order to install it an make it usable.
-Please see the file <A HREF="INSTALL">INSTALL</A> for more info.
+Please see the file <A HREF="../../wizard-0.8.2+/docs/INSTALL">INSTALL</A>
+for more info.
 
 <P>&nbsp;
 
@@ -44,20 +53,25 @@ Please see the file <A HREF="INSTALL">INSTALL</A> for more info.
 
 <P>This package consists of the next classes:
 
-<P><TT><U><FONT COLOR="#0000FF"><A HREF="#Wizard">panos.awt.Wizard</A></FONT></U></TT>
+<P><TT><A HREF="#WizardListener">panos.awt.WizardListener</A></TT>
 
 <P><TT><U><FONT COLOR="#0000FF"><A HREF="#browseButton">panos.awt.browseButton</A></FONT></U></TT>
+
+<P><TT><A HREF="../../wizard-0.8.2+/docs/wizButton">panos.awt.wizButton</A></TT>
 
 <P><TT><A HREF="#Other_classe">panos.awt.wizPage</A></TT>
 
 <P><TT><A HREF="#Other_classe">panos.awt.wizImage</A></TT>
 
 <P><TT><A HREF="#Other_classe">panos.awt.WizardLayout</A></TT>
+
+<P><TT><A HREF="#Other_classe">panos.awt.Msgbox</A></TT>
+<BR>&nbsp;
 <BR>&nbsp;
 
 <P>&nbsp;
 
-<P><B><I><FONT FACE="Arial">4. How to enter this packages in your application
+<P><B><I><FONT FACE="Arial">4. How to import this packages in your application
 / applet:</FONT></I></B>
 
 <P>To use them you have to import them first:
@@ -67,12 +81,109 @@ Please see the file <A HREF="INSTALL">INSTALL</A> for more info.
 <P>or
 
 <P><TT>import panos.awt.Wizard;</TT>
-<BR><TT>import panos.awt.wizPage;</TT>
+<BR><TT>import panos.awt.WizardListner;</TT>
 <BR><TT>...</TT>
 
 <P>Then, you are ready to use all the wizard classes
+<BR>&nbsp;
 
 <P>&nbsp;
+
+<P><A NAME="WizardListener"></A><B><I><U><FONT FACE="Arial">5. WizardListener
+interface</FONT></U></I></B>
+<BR>&nbsp;
+
+<P><B><I><U>5.1 General Info</U></I></B>
+
+<P>This is the interface for an object to be able to recieve the various
+wizard events. If you want your application to recieve events from the
+wizard, you <I>must</I>&nbsp; implement this interface.
+<BR>&nbsp;
+
+<P>The class is defined as follows:
+
+<P><TT>public interface WizardListener</TT>
+<BR>&nbsp;
+
+<P><A NAME="WIzardListener_implementation"></A><B><I><FONT FACE="Arial">5.2
+Implementation</FONT></I></B>
+<BR>&nbsp;
+<BR>You have to implement this interface to you application class, if you
+want this class to recieve wizard events.
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>public class myapplication implements WizardListener</TT>
+
+<P>&nbsp;
+<BR>&nbsp;
+
+<P><A NAME="WizardListener_methods"></A><B><I><FONT FACE="Arial">5.3 Methods</FONT></I></B>
+
+<P>Remember that you have to override all the below methods, or else your
+class will be definec abstract.
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><TT>public void clickedFinish ()</TT>
+
+<P>This method is called when the Finish button is clicked.
+<BR>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><TT>public void clickedCancel ()</TT>
+
+<P>This method is called when the Cancel button is clicked.
+<BR>&nbsp;
+
+<P>&nbsp;<IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><TT>public void changedPage ( int pg )</TT>
+
+<P>This method is called whenever the wizard page changes. It returns an
+integer of the&nbsp; current wizard page.
+<BR>Note: the first page number is 1, not 0.
+<BR>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><TT>public void performedAction ( wizButton wb )</TT>
+
+<P>This method is called when a wizButton is clicked. Remember to check
+<I>which</I>&nbsp; wizButton created this event, because ALL&nbsp;the wizButtons
+connect to the <U>same</U> method.
+
+<P>&nbsp;
+
+<P>&nbsp;
+<ADDRESS>
+Examples</ADDRESS>
+
+
+<P><TT>wizButton wb1;</TT><TT></TT>
+
+<P><TT>public void clickedFinish () {</TT>
+<BR><TT>&nbsp;&nbsp;&nbsp; System.out.println ("Finish clicked");</TT>
+<BR><TT>&nbsp;&nbsp;&nbsp; }</TT>
+
+<P><TT>public void clickedCancel () {</TT>
+<BR><TT>&nbsp;&nbsp;&nbsp; System.out.println ("Cancel clicked");</TT>
+<BR><TT>&nbsp;&nbsp;&nbsp; }</TT><TT></TT>
+
+<P><TT>public void changedPage () {}&nbsp;&nbsp;&nbsp; // not interested</TT><TT></TT>
+
+<P><TT>public void performedAction ( wizButton wb ) {</TT>
+<BR><TT>&nbsp;&nbsp;&nbsp; if ( wb == wb1 )</TT>
+<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { System.out.println
+("Action button 1 clicked"); }</TT>
+<BR><TT>&nbsp;&nbsp;&nbsp; }</TT><TT></TT>
+
+<P><TT>. . .</TT><TT></TT>
+
+<P><TT>&nbsp;&nbsp;&nbsp; wb1 = new wizButton ( this, "Action button 1");</TT>
+<BR><TT>&nbsp;</TT>
 
 <P>&nbsp;
 
@@ -82,7 +193,7 @@ Please see the file <A HREF="INSTALL">INSTALL</A> for more info.
 <P><B><I><U>6.1 General Info</U></I></B>
 
 <P>This is the main class of the package. Usually you have to work only
-with this class and it?s methods.
+with this class and it's methods.
 
 <P>The class is defined as follows:
 
@@ -98,9 +209,11 @@ pages instead of 1.
 
 <P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
 
-<P><TT>Wizard (Applet apl)</TT>
+<P><TT>Wizard (WizardListener wl)</TT>
 
-<P>Create a new Wizard. You should give the parent applet as parameter.
+<P>Create a new Wizard. You should give the caller program (or wherever
+you want ti listen for Wizard events) as parameter. See also the interface
+WizardListener.
 <ADDRESS>
 Example</ADDRESS>
 
@@ -111,19 +224,21 @@ Example</ADDRESS>
 
 <P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
 
-<P><TT>Wizard (Applet apl, int xLen, int yLen)</TT>
+<P><TT>Wizard (WizardListener wl, int xLen, int yLen)</TT>
 
-<P>Create a new Wizard. You should give the parent applet, the width and
-the height of the window as parameter.
+<P>Create a new Wizard. You should give the&nbsp; caller program (or wherever
+you want ti listen for Wizard events) as parameter.
+<BR>See also the interface WizardListener.
 <ADDRESS>
 Example</ADDRESS>
 
 
 <P><TT>&nbsp;Wizard mywiz = new Wizard (this, 500, 300)</TT>
+<BR>&nbsp;
 
 <P>&nbsp;
 
-<P><B><I><FONT FACE="Arial">6.3 Methods</FONT></I></B>
+<P><A NAME="Wizard_methods"></A><B><I><FONT FACE="Arial">6.3 Methods</FONT></I></B>
 
 <P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
 
@@ -172,7 +287,7 @@ but the wizPage class will not insert them in the page.
 <P>&nbsp;
 
 <P>In order to add other objects or to change the Layout manager, look
-in the <U><FONT COLOR="#0000FF"><A HREF="usage.html#Wizard_getWizPage">getWizPage</A></FONT></U>
+in the <U><FONT COLOR="#0000FF"><A HREF="../../wizard-0.8.2+/docs/usage.html#Wizard_getWizPage">getWizPage</A></FONT></U>
 method.
 <ADDRESS>
 Example</ADDRESS>
@@ -297,54 +412,10 @@ Example</ADDRESS>
 <P><TT>wpage = getWizPage (3);</TT>
 
 <P><TT>wpage.add ( pan );</TT>
-
-<P><TT>&nbsp;</TT>
-
-<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
-
-<P><A NAME="Wizard_handleEvent"></A><TT>public boolean handleEvent(Event
-evt)</TT>
-
-<P>This is a method just to handle the button events. Usually you don't
-need to call this method directly.
-
-<P>When the Cancel or Finish button is clicked the wizard disappears and
-an event is given to the parent applet. The event has the following data:
-
-<P>target : the parent applet
-
-<P>id : an integer defining the type of event If the Finish button is clicked
-then it has a value as defined in Wizard.EventId . If Cancel is clicked
-then it has a value as Wizard.EventId + 1 . For more info see the EventId
-variable.
-
-<P>arg : this wizard
-
-<P>In the following example it demostrates how to maniputale the event
-created by the Wizard class.
-<ADDRESS>
-Example using the event handler in the applet class</ADDRESS>
-
-
-<P><TT>if (ev.id == myWiz.EventId ? ev.target == this)</TT><TT></TT>
-
-<P><TT>{</TT><TT></TT>
-
-<P><TT>&nbsp;&nbsp;&nbsp; System.out.println(?Finish clicked.?);</TT><TT></TT>
-
-<P><TT>}</TT><TT></TT>
-
-<P><TT>else if (ev.id == (myWiz.EventId + 1) ? ev.target == this)</TT><TT></TT>
-
-<P><TT>{</TT><TT></TT>
-
-<P><TT>&nbsp;&nbsp;&nbsp; System.out.println( "Cancel clicked." );</TT><TT></TT>
-
-<P><TT>}</TT><TT></TT>
+<BR>&nbsp;
 
 <P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
-
-<P><A NAME="Wizard_pages"></A><TT>public int pages ()</TT>
+<BR><A NAME="Wizard_pages"></A><TT>public int pages ()</TT>
 
 <P>With this method you can get back the number of pages this wizard has.
 <ADDRESS>
@@ -373,7 +444,7 @@ enable or disable the finish button for this page.
 Example</ADDRESS>
 
 
-<P><FONT FACE="Courier New"><FONT SIZE=-1>mywiz.setFinish ( 3 , true );</FONT></FONT>
+<P><TT>mywiz.setFinish ( 3 , true );</TT>
 
 <P>&nbsp;
 
@@ -394,27 +465,60 @@ you create <B><I>5</I></B> pages and not 6, as opposed to the addPage method.
 Example</ADDRESS>
 
 
-<P><TT>Wizard mywiz;</TT><TT></TT>
+<P><TT>Wizard mywiz;</TT>
 
-<P><TT>. . .</TT><TT></TT>
+<P><TT>. . .</TT>
 
-<P><TT>mywiz = new Wizard ();</TT><TT></TT>
+<P><TT>mywiz = new Wizard ();</TT>
 
-<P><TT>mywiz.setPages ( 5 ) ;</TT><TT></TT>
+<P><TT>mywiz.setPages ( 5 ) ;</TT>
+<BR>&nbsp;
 
 <P>&nbsp;
+<BR><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
 
-<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+<P><A NAME="Wizard_setHelpText"></A><TT>public void setHelpText (int page,
+String txt[])</TT>
 
-<P><A NAME="Wizard_show"></A><TT>public void show ()</TT>
+<P>With this method you can set a little help text for every Wizard page.
 
-<P>Use this method in order to display the wizard. When you have finished
-creating the wizard, you have to use this method.
+<P><B>This feature is still experimental and it is possible to change dramatically
+in the future.</B>
+
+<P>In order to use it you must first create a String [ ] , containing the
+various text lines for this help text.
+<BR>&nbsp;
+<BR>&nbsp;
 <ADDRESS>
 Example</ADDRESS>
 
 
-<P><TT>mywiz.show();</TT>
+<P><TT>mywiz = new Wizard ();</TT>
+
+<P><TT>. . .</TT>
+
+<P><TT>String help1 = { "This is a line of help", "and this is another
+line" );</TT>
+
+<P><TT>mywiz.setHelpText ( 1, help1 );</TT>
+<BR>&nbsp;
+<BR>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="Wizard_show"></A><TT>public void displayWizard ()</TT>
+
+<P>Use this method in order to display the wizard. When you have finished
+creating the wizard, you have to use this method.
+<BR>WARNING : if you use another method to display this wizard (like the
+<TT>show()</TT> or the <TT>setVisible(true)</TT> method), strange things
+would happen. You SHOULD ONLY use the displayWizard method.
+<BR>&nbsp;
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>mywiz.displayWizard();</TT>
 
 <P>&nbsp;
 
@@ -529,16 +633,7 @@ tf );</TT>
 <P>&nbsp;
 
 <P><B><I><FONT FACE="Arial">7.3 Methods</FONT></I></B>
-
-<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
-
-<P><A NAME="browseButton_action"></A><TT>public void action (</TT><FONT FACE="Courier New"><FONT SIZE=-1>Event
-ev, Object obj</FONT></FONT><TT>)</TT>
-
-<P>This method is used to manipulate the action events caused by the button.
-Usually you don't need to use this method.
-
-<P>&nbsp;
+<BR>&nbsp;
 
 <P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
 
@@ -602,29 +697,96 @@ Example</ADDRESS>
 <P><TT>brButton.setFrame( myWiz )</TT>
 <BR>&nbsp;
 <BR>&nbsp;
+<BR><B><I><U>8. wizButton class</U></I></B><B><I><U></U></I></B>
 
-<P><A NAME="Other_classe"></A><B><I><U><FONT FACE="Arial">8. Other classes</FONT></U></I></B>
+<P><B><I><U>7.1 General Info</U></I></B>
+
+<P>This is a class in order to create active action buttons in your wizard.
+Although you can always add buttons in your wizard, you can never have
+an action handler for them. With this component you can solve this problem.
+You can simply add these buttons to the wizard and grap the actions from
+your caller application. To realize this you have to override the method
+performedAction( wizButton wb)&nbsp;from the WizardLIstener interface.
+<BR>I think, now with the new AWT in Java 1.1 this is not needed anymore.
+Still, I&nbsp;have implemented this and if you want to use it, use it!
+If not, you don't have to :-)
+
+<P>The class is defined as follows:
+
+<P><TT>public class wizButton extends Button</TT>
+
+<P>&nbsp;
+
+<P><A NAME="browseButton_constructors"></A><B><I><FONT FACE="Arial">7.2
+Constructors</FONT></I></B>
+
+<P>You have to give as parameter the caller class (which should implemented
+WizardListener interface)
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><TT>wizButton ( WizardListener wl)</TT>
+
+<P>Create a new browseButton with no label.
 <BR>&nbsp;
-<BR>Wizard uses two more classes: wizImage and wizPage.
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>wizButton wButton = new wButton ( this );</TT>
+<BR>&nbsp;
+
+<P>&nbsp;<IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><TT>wizButton ( WizardListener wl, String labl)</TT>
+
+<P>Create a new browseButton with label as defined in String labl.
+<BR>&nbsp;
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>wizButton wButton = new wButton ( this, "Display current result"
+);</TT>
+<BR>&nbsp;
+
+<P><B><I>Methods</I></B>
+
+<P>No public methods defined. Same as with normal Buttons. REMEMBER:&nbsp;To
+be able to grab actions from buttons you have to support the method performedAction&nbsp;.
+Anyway, the compiler wouldn't let you create a caller class without it.
+
+<P>See also examples in <A HREF="#WizardListener">WizardListener</A>.
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+<BR>&nbsp;
+
+<P><A NAME="Other_classe"></A><B><I><U><FONT FACE="Arial">9. Other classes</FONT></U></I></B>
+<BR>&nbsp;
+<BR>Wizard uses three more classes: wizImage, Msgbox and wizPage.
 <BR>They are defined as follows:
 
 <P><TT>public class wizImage extends Canvas</TT>
 
 <P><TT>public class wizPage extends Panel</TT>
+
+<P><TT>public class Msgbox extends Dialog</TT>
 <BR>&nbsp;
 
-<P>Both classes are for it's internel use and normaly you don't have to
+<P>These classes are for it's internel use and normaly you don't have to
 call them directly.
+
+<P>The class Msgbox is only to display the little help text.
 
 <P>Especially for the wizPage you can still get a handler for a specific
 page and call it directly, as described in the getWizPage(int) method above.
-<BR>For developers: if you want to create other objects to include in a
-wizard, please e-mail me to give you more information and the source of
-the wizPage class, so that you'll have the needed information.
 <BR>&nbsp;
 
 <P>THANK YOU FOR DOWNLOADING THIS PACKAGE
-<BR>&nbsp;
+
+<P>IF YOU HAVE ANY COMMENTS, BUG-REPORTS ETC. YOU ARE STRONGLY WELCOMED
+TO INFORM ME ABOUT THEM, SO THAT I CAN FIX THEM IN THE FUTURE.
 
 <P>Panos Katsaloulis
 

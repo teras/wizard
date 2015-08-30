@@ -1,66 +1,70 @@
 // ******************************************************************************
 // WizardExec.java:	Application
-//  This application demostrates the use of the wizard class
+//  This application demostrates the use of the Wizard class
 // ******************************************************************************
-import java.awt.*;
-import java.applet.Applet;
+import java.awt.Choice;
+import java.awt.TextField;
+import java.awt.Label;
 import panos.awt.browseButton;
 import panos.awt.Wizard;
-import panos.system.utils;
+import panos.awt.WizardListener;
+import panos.awt.wizButton;
 
 //==============================================================================
 // Main Class for applet WizardExec
 //
 //==============================================================================
-public class WizardExec extends Applet
+public class WizardExec implements WizardListener
 {
 
+	// We need these handlers, so that we can get the data from the wizard back
 	TextField tfx;
 	browseButton bb;
 	Choice mc ;
+	wizButton wb1 ;
 	
 	Wizard myWiz;
-	String tempOut;
 
-	// The following code is in order to run this program as application too
-	public WizardExec (){}
+	// constructor if this class
+	public WizardExec(){}
+
+	public void clickedFinish()
+	{
+		String tempOut = mc.getSelectedItem() + " - " + tfx.getText() + " - " +bb.getFilename (); 
+		System.out.println (tempOut);
+		System.exit(0); 
+	}
+
+	public void clickedCancel()
+	{
+		System.out.println ("Cancel clicked");
+		System.exit(0); 
+	}
+
+	public void changedPage ( int pg )
+	{
+		System.out.println ("Page changed: page number is " + pg );
+	}
+
+	public void performedAction (wizButton wb)
+	{
+		if ( wb == wb1)
+			System.out.println ("Action button 1 clicked !" );
+	}
+
+
+
 	public static void main(String argv[]) 
 	{
-		WizardExec we = new WizardExec ();
-		we.start();
-	}
-
-	public void paint (Graphics g)
-	{
-		g.drawString (tempOut, 12, 12);
+		WizardExec me = new WizardExec();
+		me.createWizard();
+		me.myWiz.displayWizard(); 
 	}
 
 
-	public boolean handleEvent (Event ev)
-	{
 
-		if (ev.id == myWiz.EventId)
-		{
-			tempOut = mc.getSelectedItem() + " - " + tfx.getText() + " - " +bb.getFilename ();
-			if (!utils.isApplet(this)) System.exit(0);
-			repaint();
-			return true;
-		}
-		else if (ev.id == (myWiz.EventId + 1))
-		{
-			tempOut = "Cancel clicked.";
-			if (!utils.isApplet(this)) System.exit(0);
-			repaint();
-			return true;
-		}
-		return false;
-	}
-
-
-	public void start()
-	{
-		tempOut = "";
-
+	public void createWizard()
+	{
 		myWiz = new Wizard(this , 500, 500);
 		
 		mc= new Choice();
@@ -72,6 +76,8 @@ public class WizardExec extends Applet
 
 		bb = new browseButton ( );
 		bb.setFrame (myWiz);
+
+		wb1 = new wizButton (this, "Action button #1");
 
 		myWiz.setPages( 3 );
 		
@@ -88,24 +94,17 @@ public class WizardExec extends Applet
 
 		myWiz.addItem ( 3, new Label ());
 		myWiz.addItem ( 3, new Label ("Click Finish to display the results"));
+		myWiz.addItem ( 3, wb1 );
+
 		myWiz.setFinish (  2 , true);
 		myWiz.addPicture ("demo.gif");
-		myWiz.show();
-	}
-	
-	
-	
-	
-	// APPLET INFO SUPPORT:
-	//		The getAppletInfo() method returns a string describing the applet's
-	// author, copyright date, or miscellaneous information.
-    //--------------------------------------------------------------------------
-	public String getAppletInfo()
-	{
-		return "Name: WizardExec\r\n" +
-		       "Author: Panos\r\n" +
-		       "e-mail: teras@writeme.com";
-	}
 
+
+		String help1 [] = { "This is help for 1st page" };
+		String help2 [] = { "This is help for", "the second page"};
+		myWiz.setHelpText (1, help1);
+		myWiz.setHelpText (2, help2);
+
+	}
 
 }

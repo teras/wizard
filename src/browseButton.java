@@ -1,6 +1,11 @@
 package panos.awt;
 
-import java.awt.*;
+import java.awt.Frame;
+import java.awt.TextField;
+import java.awt.FileDialog;
+import java.awt.Button;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class browseButton extends Button
 {
@@ -27,27 +32,27 @@ public class browseButton extends Button
 		super ( str );
 		bTextField = tf;
 		FDialog = null;
+
+		// Add the event handling routine for Java 1.1
+		this.addActionListener (new ActionListener ()
+		{ public void actionPerformed (ActionEvent evt)
+			{ callBrowser (evt); }
+		} );
+
 	}
 
 	
-	// Handle the events of this component
-	public boolean action (Event ev, Object obj)
+	// The button is clicked, so we have to display the dialog
+	public void callBrowser ( ActionEvent ev )
 	{
-		String fname;
-		
-		if ( ev.target  == this )
-		{
-			if (bFrame == null)
-				bFrame = new Frame();
-			if (FDialog == null)
-				FDialog = new FileDialog (bFrame, "Please select a file name.");
-			FDialog.show();
-			fname = FDialog.getFile();
-			if ( fname != null)
-				bTextField.setText ( FDialog.getDirectory() + fname);
-			return true;
-		}
-		return false;
+		if (bFrame == null)
+			bFrame = new Frame();
+		if (FDialog == null)
+			FDialog = new FileDialog (bFrame, "Please select a file name.");
+		FDialog.show();
+		String fname = FDialog.getFile();
+		if ( fname != null)
+			bTextField.setText ( FDialog.getDirectory() + fname);
 	}
 
 
