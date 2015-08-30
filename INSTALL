@@ -1,0 +1,94 @@
+Installation instructions
+=========================
+ 
+  First of all unzip / untar all files to a temporary
+directory - maybe you've  done this already. 
+ 
+  The classes of this package are all in source code. In the previous release
+all files (except from the WizardExec) was in compiled form. Now I decided to
+give out the source code for this project. This has some advantages and
+disadvantages. FIrst of all you have to compile on your own the files. If you
+are already a Java programmer this would be a piece of cake for you. On the
+other hand it's much easier for me to maintain and update only one thing (the
+source files) than 2 or more (e.g. source files, examples, compiled classes
+etc.). Even more, if you are not able to compile these classes, you are not
+able to _use_ them.
+
+
+General Instructions
+--------------------
+
+  Now, some tips on how to compile these files. First of all you (may) need to
+define a classpath. There you're on your own - I managed to find a Java
+version which automatically detects the appropriate CLASSFILE value.
+Second you have to compile all the classes one by one. Remember that some
+files need to be compiled first and then the others. Also remember that all
+files (except from WizardExec.class) belong to a package. So you have to
+compile them with the '-d .' switch. With this option javac automatically
+puts the classfile to its proper location. If the compiler compailns about
+missing arguments (e.g. "Class panos.awt.wizImage not found in type
+declaration.") then you should first compile the class which is complaining
+about (in our example the 'wizImage.java') and then recompile the previous
+file. When you've compiled everything, it's time to run the demo application.
+
+Examples
+to compile: javac -d . wizImage.java
+to run: java WizardExec
+
+  To permenently install these files, copy all files (remember to maintain the
+directory tree) to anywhere you want and remember to add this directory to the
+CLASSPATH environmental variable.
+
+  If you see any complaints about a deprecateed API, don't bother. That's
+because this component was written for Java 1.0. In the future I'm planning to
+fix this and transform this component to Java 1.1.
+
+
+Linux / Unix
+------------
+
+I tried to create a simple Makefile, in order to make the life of Unix users
+easier. I don't know if I succeeded. It's my first attempt and I don't know
+well how to use this tool. If you can give me any ideas on how to make it
+better, PLEASE give me a note. Still, you have to edit the Makefile to suit
+your needs. Go to directory src and edit the Makefile found there.
+
+Winblow$ 95
+-----------
+
+Don't forget to add your personal package directory (where you installed this
+package) to the CLASSPATH environmental variable, or else java couldn't find
+this package.
+ 
+
+
+After the compilation
+---------------------
+
+Remember that these files can't been executed as is. They are only useful
+from another application. So, don't forget to put them somewhere your java
+compiler and interprenter can read them. After the installation you can
+insert the wizard component to your application. To find out everything about
+the wizard methods, go to usage.html.
+
+
+
+Some Notes
+----------
+
+Some JDKs automatically add the current directory to the CLASSPATH. If this is
+your case you don't need to manually change your CLASSPATH.
+
+The class panos.system.utils is not actually part of the wizard  package but
+it contains some useful methods. 
+
+
+
+If you experienced any trouble with this package, please let me
+know about it and e-mail me. 
+
+Panos Katsaloulis
+teras@writeme.com
+
+ 
+

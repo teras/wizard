@@ -1,0 +1,13 @@
+This is my wishlist for the wizard component
+
+- implement the Java 1.1 AWT API to wizard component
+
+- change the event-driven notification system to a Listener-type one
+
+- inform the parent application of every page change
+
+- ability to handle action butons in the wizard
+
+- add a help button for the specified page
+
+- implement a message box for use in the wizard

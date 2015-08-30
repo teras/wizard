@@ -1,0 +1,636 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Generator" CONTENT="Microsoft Word 97">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04j2 [en] (X11; I; Linux 2.0.35 i686) [Netscape]">
+   <META NAME="Author" CONTENT="Teras">
+   <TITLE>USE OF JAVA WIZARD V 1</TITLE>
+</HEAD>
+<BODY>
+
+<CENTER><A NAME="TOP"></A><B><U><FONT FACE="Arial"><FONT SIZE=+1>USAGE
+OF JAVA WIZARD V 0.8</FONT></FONT></U></B></CENTER>
+
+
+<P><B><I><FONT FACE="Arial">&nbsp;</FONT></I></B>
+
+<P><B><I><FONT FACE="Arial">1. General Info</FONT></I></B>
+
+<P>This project is an attempt to bring the Wizard feature of a (well know)
+OS to the Java environment. It is a package. It is not a self runnable
+application or applet. Instead you have to do some programming yourself
+in order to display this Wizard.
+
+<P>All these mean that you can use it like every Java AWT component. It
+is very easy to use and if you know a little bit about Java and even less
+about AWT you can create any wizard you want.
+
+<P>&nbsp;
+
+<P><A NAME="INSTALL"></A><B><I><FONT FACE="Arial">2. Installation Instructions</FONT></I></B>
+
+<P>You have to do some manual work in order to install it an make it usable.
+Please see the file <A HREF="INSTALL">INSTALL</A> for more info.
+
+<P>&nbsp;
+
+<P><B><I><FONT FACE="Arial">3. The Wizard classes</FONT></I></B>
+
+<P>The wizard classes belong to the following package:
+
+<P><TT>panos.awt</TT>
+
+<P>&nbsp;
+
+<P>This package consists of the next classes:
+
+<P><TT><U><FONT COLOR="#0000FF"><A HREF="#Wizard">panos.awt.Wizard</A></FONT></U></TT>
+
+<P><TT><U><FONT COLOR="#0000FF"><A HREF="#browseButton">panos.awt.browseButton</A></FONT></U></TT>
+
+<P><TT><A HREF="#Other_classe">panos.awt.wizPage</A></TT>
+
+<P><TT><A HREF="#Other_classe">panos.awt.wizImage</A></TT>
+
+<P><TT><A HREF="#Other_classe">panos.awt.WizardLayout</A></TT>
+<BR>&nbsp;
+
+<P>&nbsp;
+
+<P><B><I><FONT FACE="Arial">4. How to enter this packages in your application
+/ applet:</FONT></I></B>
+
+<P>To use them you have to import them first:
+
+<P><TT>import panos.awt.*;</TT>
+
+<P>or
+
+<P><TT>import panos.awt.Wizard;</TT>
+<BR><TT>import panos.awt.wizPage;</TT>
+<BR><TT>...</TT>
+
+<P>Then, you are ready to use all the wizard classes
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P><A NAME="Wizard"></A><B><I><U><FONT FACE="Arial">6. Wizard class</FONT></U></I></B>
+<BR>&nbsp;
+
+<P><B><I><U>6.1 General Info</U></I></B>
+
+<P>This is the main class of the package. Usually you have to work only
+with this class and it?s methods.
+
+<P>The class is defined as follows:
+
+<P><TT>public class Wizard extends Frame</TT>
+
+<P>&nbsp;
+
+<P><A NAME="Wizard_constructors"></A><B><I><FONT FACE="Arial">6.2 Constructors</FONT></I></B>
+
+<P>Remember that by creating a Wizard, you create it's first page too.
+So if you use next the addPage() method, you will have <B><I>2</I></B>
+pages instead of 1.
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><TT>Wizard (Applet apl)</TT>
+
+<P>Create a new Wizard. You should give the parent applet as parameter.
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>Wizard mywiz = new Wizard (this);</TT>
+
+<P><TT>&nbsp;</TT>
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><TT>Wizard (Applet apl, int xLen, int yLen)</TT>
+
+<P>Create a new Wizard. You should give the parent applet, the width and
+the height of the window as parameter.
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>&nbsp;Wizard mywiz = new Wizard (this, 500, 300)</TT>
+
+<P>&nbsp;
+
+<P><B><I><FONT FACE="Arial">6.3 Methods</FONT></I></B>
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="Wizard_addItem"></A><TT>public void addItem ( int pag, Object
+obj )</TT>
+
+<P>With this method you can attach an object to a specified page. In order
+to use it first create the object and then pass it as parameter to this
+method.
+
+<P>The first parameter is the number of the page and the second the object
+
+<P>Remember that although you can call this method with every object, in
+order to display the object in the wizard it must be one of the supported
+types:
+<UL>
+<LI>
+browseButton</LI>
+
+<LI>
+Canvas</LI>
+
+<LI>
+Checkbox</LI>
+
+<LI>
+Choice</LI>
+
+<LI>
+Label</LI>
+
+<LI>
+List</LI>
+
+<LI>
+TextArea</LI>
+
+<LI>
+TextField</LI>
+</UL>
+Remember that the other objects can be <I>still</I> given as parameters,
+but the wizPage class will not insert them in the page.
+
+<P>The Layout manager for the Wizard Pages is WizardLayout
+
+<P>&nbsp;
+
+<P>In order to add other objects or to change the Layout manager, look
+in the <U><FONT COLOR="#0000FF"><A HREF="usage.html#Wizard_getWizPage">getWizPage</A></FONT></U>
+method.
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>Choise ch;</TT>
+
+<P><TT>. . .</TT>
+
+<P><TT>ch = new Choise ();</TT>
+
+<P><TT>ch.addItem ("Option 1");</TT>
+
+<P><TT>ch.addItem ("Option 2");</TT>
+
+<P><TT>ch.addItem ("Option 3");</TT>
+
+<P><TT>mywiz.addItem ( 1, ch);</TT>
+
+<P><TT>&nbsp;</TT>
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="Wizard_addPage"></A><TT>public void addPage ()</TT>
+
+<P>With this method you can add a page at the end of the current stream
+of pages.
+
+<P>REMEMBER!!!! the creator of Wizard object already creates a page, so
+that it will never be an empty Wizard. If you manually call this method,
+remember that you add the second, third etc. page.
+
+<P>See the <U><FONT COLOR="#0000FF"><A HREF="#Wizard_constructors">constructors</A></FONT></U>
+too.
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>wz.addPage();</TT>
+
+<P>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="Wizard_addPicture"></A><TT>public void addPicture ( String
+s_pic )</TT>
+
+<P>With this method you can add a picture on the left of this wizard. As
+a parameter you give the (relative or absolute) filename of the image
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>wz.addPicture ( "leftpic.gif" );</TT>
+
+<P>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="Wizard_addTopSpace"></A><TT>public void addTopSpace (int spac)</TT>
+
+<P>With this method you can define a space on the top of this wizard window.
+If you don't use it, then the wizard objects will be put right at the top
+of the Frame. The parameter is the number of pixels to leave blank.
+<BR>This feature is deprecated. If you want to add space on the top, you
+can simple add a Label with a zero lenght string. You can insert everywere
+a blank line with this trick.
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>wz.addTopSpace ( 10 );</TT>
+
+<P>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="Wizard_existsPage"></A><TT>public boolean existsPage ( int
+pag )</TT>
+
+<P>With this method you can check if the given page number exists. As parameter
+you give the page number you want to check.
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>if ( wz.existsPage ( 5 ) )</TT>
+
+<P><TT>{</TT>
+
+<P><TT>. . .</TT>
+
+<P><TT>}</TT>
+
+<P>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="Wizard_getWizPage"></A><TT>public wizPage getWizPage (int page)</TT>
+
+<P>This method returns a handler for a wizard page. It is a useful method,
+if you want to call directly the methods of any wizard page (Panel). Without
+this method you can not get a handler for the wizard pages stored in a
+wizard.
+
+<P>It is not recommended though to use this method. It is not recommended
+to use <I>any</I> of the wizPage methods either. But if you want to change
+the Layout manager, or add objects not supported by wizPage class directly,
+this is the only way.
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>wizPage wpage;</TT>
+
+<P><TT>Panel pan;</TT>
+
+<P><TT>. . .</TT>
+
+<P><TT>pan = new Panel();</TT>
+
+<P><TT>wpage = getWizPage (3);</TT>
+
+<P><TT>wpage.add ( pan );</TT>
+
+<P><TT>&nbsp;</TT>
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="Wizard_handleEvent"></A><TT>public boolean handleEvent(Event
+evt)</TT>
+
+<P>This is a method just to handle the button events. Usually you don't
+need to call this method directly.
+
+<P>When the Cancel or Finish button is clicked the wizard disappears and
+an event is given to the parent applet. The event has the following data:
+
+<P>target : the parent applet
+
+<P>id : an integer defining the type of event If the Finish button is clicked
+then it has a value as defined in Wizard.EventId . If Cancel is clicked
+then it has a value as Wizard.EventId + 1 . For more info see the EventId
+variable.
+
+<P>arg : this wizard
+
+<P>In the following example it demostrates how to maniputale the event
+created by the Wizard class.
+<ADDRESS>
+Example using the event handler in the applet class</ADDRESS>
+
+
+<P><TT>if (ev.id == myWiz.EventId ? ev.target == this)</TT><TT></TT>
+
+<P><TT>{</TT><TT></TT>
+
+<P><TT>&nbsp;&nbsp;&nbsp; System.out.println(?Finish clicked.?);</TT><TT></TT>
+
+<P><TT>}</TT><TT></TT>
+
+<P><TT>else if (ev.id == (myWiz.EventId + 1) ? ev.target == this)</TT><TT></TT>
+
+<P><TT>{</TT><TT></TT>
+
+<P><TT>&nbsp;&nbsp;&nbsp; System.out.println( "Cancel clicked." );</TT><TT></TT>
+
+<P><TT>}</TT><TT></TT>
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="Wizard_pages"></A><TT>public int pages ()</TT>
+
+<P>With this method you can get back the number of pages this wizard has.
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>int no_of_pages = mywiz.pages();</TT>
+
+<P>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="Wizard_setFinish"></A><TT>public void setFinish ( int page,
+boolean finish)</TT>
+
+<P>With this method you can set the finish button to any page.
+
+<P>By default the finish button is disabled for all the wizard pages except
+the last one. Sometimes there is a need to finish the wizard earlier. With
+this method you can set manually which pages you can exit with the finish
+button. As parameters it gets the page number and a boolean if it should
+enable or disable the finish button for this page.
+
+<P>Remember that in the last page the finish button is ALWAYS enabled.
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><FONT FACE="Courier New"><FONT SIZE=-1>mywiz.setFinish ( 3 , true );</FONT></FONT>
+
+<P>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="Wizard_setPages"></A><TT>public void setPages (int hm_pages)</TT>
+
+<P>With this method you can set the number of pages for this Wizard.
+
+<P>If you use it for a second time with a greater number of pages as before,
+you can add pages with this method. It is a quivker method from addPage().
+
+<P>This method sets the ABSOLUTE number of pages. That means if you call&nbsp;
+<TT>mywiz.setPages (5);</TT> in your program just after the constructor,
+you create <B><I>5</I></B> pages and not 6, as opposed to the addPage method.
+<BR>&nbsp;
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>Wizard mywiz;</TT><TT></TT>
+
+<P><TT>. . .</TT><TT></TT>
+
+<P><TT>mywiz = new Wizard ();</TT><TT></TT>
+
+<P><TT>mywiz.setPages ( 5 ) ;</TT><TT></TT>
+
+<P>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="Wizard_show"></A><TT>public void show ()</TT>
+
+<P>Use this method in order to display the wizard. When you have finished
+creating the wizard, you have to use this method.
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>mywiz.show();</TT>
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P><A NAME="browseButton"></A><B><I><U><FONT FACE="Arial">7. browseButton
+class</FONT></U></I></B>
+<BR>&nbsp;
+
+<P><B><I><U>7.1 General Info</U></I></B>
+
+<P>This is a class in order to display a browse button in your wizard.
+A browse button is a button with a TextField attached to it. If you click
+on the button then a file dialog box appears and waits for you to select
+a file name. By clicking in the Open button then the contents of the TextField
+are replaced with the directory and file name of the file choosed.
+
+<P>The class is defined as follows:
+
+<P><TT>public class browseButton extends Button</TT>
+
+<P>&nbsp;
+
+<P><A NAME="browseButton_constructors"></A><B><I><FONT FACE="Arial">7.2
+Constructors</FONT></I></B>
+
+<P>Remember that by creating a browseButton class usually you create a
+TextField too, except if you give as parameter an already created TextField.
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><TT>browseButton ()</TT>
+
+<P>Create a new browseButton with default parameters.
+
+<P>The button text will be " Browse... " . The class will create an internal
+TextField for you.
+<BR>&nbsp;
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>browseButton brButton = new browseButton ();</TT>
+
+<P>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><TT>browseButton ( String str )</TT>
+
+<P>Create a new browseButton.
+
+<P>The button text will be as defined in String str . The class will create
+an internal TextField for you.
+<BR>&nbsp;
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>browseButton brButton = new browseButton ("Click here to find file
+name");</TT>
+
+<P>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><TT>browseButton ( TextField tf )</TT>
+
+<P>Create a new browseButton.
+
+<P>The button text will be " Browse... " . The parameter given is the TextField
+to use in order to display the results.
+<BR>&nbsp;
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>TextField tf;</TT>
+
+<P><TT>. . .</TT>
+
+<P><TT>tf = new TextField (25);</TT>
+
+<P><TT>browseButton brButton = new browseButton ( tf );</TT>
+
+<P>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><TT>browseButton ( String str, TextField tf)</TT>
+
+<P>Create a new browseButton with given parameters.
+
+<P>The button text will be as defined in String str . The parameter tf
+is the TextField to use in order to display the results.
+<BR>&nbsp;
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>TextField tf;</TT>
+
+<P><TT>. . .</TT>
+
+<P><TT>tf = new TextField (25);</TT>
+
+<P><TT>browseButton brButton = new browseButton ( "Click here to browse...",
+tf );</TT>
+
+<P>&nbsp;
+
+<P>&nbsp;
+
+<P><B><I><FONT FACE="Arial">7.3 Methods</FONT></I></B>
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="browseButton_action"></A><TT>public void action (</TT><FONT FACE="Courier New"><FONT SIZE=-1>Event
+ev, Object obj</FONT></FONT><TT>)</TT>
+
+<P>This method is used to manipulate the action events caused by the button.
+Usually you don't need to use this method.
+
+<P>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="browseButton_getFilename"></A><TT>public String getFilename
+()</TT>
+
+<P>This method is used to get the filename chosen - or (in other words)
+the text from the TextField.
+<BR>&nbsp;
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>String finame = brButton.getFilename();</TT>
+
+<P>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="browseButton_getTextField"></A><TT>public TextField getTextField
+()</TT>
+
+<P>This method is used to get a pointer for the TextFiled used by this
+browseButton. Usually you don't need to use this class.
+<BR>&nbsp;
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>TextField tf = brButton.getTextField()</TT>
+
+<P>&nbsp;
+
+<P><IMG SRC="line.gif" HEIGHT=3 WIDTH=300>
+
+<P><A NAME="browseButton_setFrame"></A><TT>public void setFrame ( Frame
+fr )</TT>
+
+<P>Usually in order for this browseButton to display the File dialog, a
+frame is needed. Although the Wizard <I>is</I> a Frame, it prefers not
+to link the Filedialog with this Frame. Instead it creates an (invisible)
+new Frame. Even more, the Dialog displayed is not modal (although the wizard
+execution is suspended).
+
+<P>With this method you can save space, by defining the FileDialog Frame
+to an already created Frame, such as the wizard. By this method you make
+the filedialog modal to this frame.
+
+<P>It is STRONGLY advised to use this method.
+<BR>&nbsp;
+<ADDRESS>
+Example</ADDRESS>
+
+
+<P><TT>Wizard myWiz;</TT>
+
+<P><TT>browseButton brButton;</TT>
+
+<P><TT>. . .</TT>
+
+<P><TT>brButton.setFrame( myWiz )</TT>
+<BR>&nbsp;
+<BR>&nbsp;
+
+<P><A NAME="Other_classe"></A><B><I><U><FONT FACE="Arial">8. Other classes</FONT></U></I></B>
+<BR>&nbsp;
+<BR>Wizard uses two more classes: wizImage and wizPage.
+<BR>They are defined as follows:
+
+<P><TT>public class wizImage extends Canvas</TT>
+
+<P><TT>public class wizPage extends Panel</TT>
+<BR>&nbsp;
+
+<P>Both classes are for it's internel use and normaly you don't have to
+call them directly.
+
+<P>Especially for the wizPage you can still get a handler for a specific
+page and call it directly, as described in the getWizPage(int) method above.
+<BR>For developers: if you want to create other objects to include in a
+wizard, please e-mail me to give you more information and the source of
+the wizPage class, so that you'll have the needed information.
+<BR>&nbsp;
+
+<P>THANK YOU FOR DOWNLOADING THIS PACKAGE
+<BR>&nbsp;
+
+<P>Panos Katsaloulis
+
+<P>e-mail : <A HREF="mailto:teras@writeme.com">teras@writeme.com</A>
+<BR>&nbsp;
+
+<P><A HREF="#TOP">Back to Top ^</A>
+</BODY>
+</HTML>

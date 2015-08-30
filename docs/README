@@ -1,0 +1,56 @@
+Wizard  V0.8.1
+==============
+
+  This is the next version of my wizard component. With this component you can
+easily create a wizard, much like the wizards used in a very popular O$.
+
+  If you are not  Java developer, then you shouldn't be so interested with
+this project. You can not use it 'as is'. You have to write first a little
+application (or applet) if you want to use it. It serves only 'library'
+purposes.
+
+  You are free to use it in your programs anyway you like, as long as you
+write my name to the credits part. Furthermore, you should read the licence
+agreement (file LICENCE), which is under the GNU GPL.
+
+
+Features
+--------
+
+  This component serves as an interface between you and a wizard-like frame.
+It means that you can create a wizard with the least effort from you, which
+will be functional and as close as possible to the wizard used in your native
+(or even better in an alien) operating system.
+  The component itself takes care of creating the interface, applying the
+buttons, move between the pages, displaying a picture and informing your
+application about the current state of the wizard. Some of these features are:
+ - automatically creates a frame with all the neccesary information and
+   components, like the buttons to navigate through the pages, the layout
+   manager, the position of all the components etc. The programmer needs only
+   to inform the wizard of the inserted components and everything else is done
+   automatically.
+ - handles the events of the various buttons, so that the programmer doesn't
+   need to manually change pages in the wizard.
+ - displays a picture on the left of the wizard window. The only think the
+   programmer has to do is give the filename of the picture to be loaded.
+ - the programmer can easily define the number of pages of a wizard and if
+   the user can exit normally from this page.
+ - it supports both applets and applications.
+ - it includes a new component: the browseButton. This is a button attached to a
+   textfield. If you click on the button a file dilog appears. The filename chosen
+   appears in the textfield.
+
+
+Documentation
+-------------
+
+  You can find some info in the docs directory
+
+
+Installation
+------------
+
+  Information for the installation is in the file 'INSTALL'
+
+
+Thank you for downloading this file     :-)
