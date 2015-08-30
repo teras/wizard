@@ -1,2 +1,4 @@
 See HTML file lgpl.html under the docs directory.
 
+In order to create this file, go to 'src' directory and type
+ make docs

@@ -1,5 +1,6 @@
 package panos.awt;
 
+
 /**
 * This is the interface model, in order for a class to recieve action
 * events from the wizard. You have to implement this interface to your
@@ -19,16 +20,10 @@ public interface WizardListener
 	/**
 	* This method is called every time the Next button is clicked.
 	* @param pg the old page number (first page has pagenumber 1).
-	* @return the new page to jump. It should equal 0, or the wizard will jump to
+	* @return the new page to jump. It <I><B>should</I></B> equal to 0, or the wizard will jump to
 	* the specified page.
 	* @see panos.awt.Wizard#gotoPage
 	*/	
 	public int nextPage( int pg );
 	
-	/** This method is called when a wizButton is clicked
-	*
-	* @see panos.awt.wizButton
-	* @param wb handler to the wizButton which was clicked.
-	*/ 
-	public void performedAction ( wizButton wb );
 }

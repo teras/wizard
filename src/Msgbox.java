@@ -58,7 +58,7 @@ public class Msgbox extends Dialog
 			}
 		}
 
-		setSize (220, 150);
+		pack ();
 
 		// Add the event handling routine for Java 1.1
 		ok.addActionListener (new ActionListener ()
@@ -73,4 +73,6 @@ public class Msgbox extends Dialog
 	{
 		dispose();
 	}
+
+	
 }

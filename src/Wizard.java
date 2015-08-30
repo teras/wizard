@@ -26,7 +26,7 @@ import panos.awt.Line3D;
 * shouldn't be used.<BR>
 *
 * @author Panos Katsaloulis
-* @version 0.9.3
+* @version 0.9.4
 */
 public class Wizard extends Frame
 {
@@ -60,7 +60,7 @@ public class Wizard extends Frame
 	*/
 	public Wizard (WizardListener apl) // default constructor
 	{
-		this(apl, 600, 300 );
+		this(apl, 620, 300 );
 	}
 	
 	
@@ -79,7 +79,7 @@ public class Wizard extends Frame
 		v_pages = new Vector(0,1);  // only one start page and then increasement +1
 		
 		// define the Panel for the Wizard Pages
-		// It MUST be defined here and not int create first, 
+		// It MUST be defined here and not in createFirstCard, 
 		// because addPage() needs it ...
 		cards = new CardLayout(); // the Layout for the wizard pages
 		p_Card = new Panel();
@@ -119,7 +119,7 @@ public class Wizard extends Frame
 				int next_page;
 
 				next_page = caller.nextPage ( currentPage );
-				if (next_page == 0) next_page = currentPage + 1;
+				if (next_page <= 0) next_page = currentPage + 1;
 				gotoPage ( currentPage, next_page);
 			}
 		} );
@@ -166,7 +166,7 @@ public class Wizard extends Frame
 	* @param oldPage the number of the previous page number ( to go back when the
 	* the Previous button is clicked). If equals zero, not changes have been done
 	* (this means that it keeps the previous situation of the "Previous" button of this page).
-	*  <BR><BR>
+	*  <BR>-<BR>
 	* Warning : if you want to use this wizard in the normal way (e.g. collect
 	* information in a serial way) you don't ever need to use this method. On the
 	* other hand, if you want to interactively jump to a special page, use this method.
@@ -177,6 +177,10 @@ public class Wizard extends Frame
 	* pressed the "Next" button).
 	* <BR> 3. Read the value of the option component.
 	* <BR> 4. Return the new page number. Wizard will automatically jump there.
+	* <BR> Remember that every time you set a page like this, the wizard 'remembers'
+	* what was the previous page, and by clicking on the "Previous" button the wizard 
+	* automatically jumps there and NOT on the real back page. Of course, if the "previous"
+	* page was also the real previous page, the wizard jumps correctly to it.
 	*/
 	public void gotoPage ( int oldPage, int newPage )
 	{
@@ -232,7 +236,8 @@ public class Wizard extends Frame
 	/**
 	* With this method you can set a little help text for every Wizard
 	* page. This feature is still experimental and it is possible to
-	* change dramatically in the future. 	
+	* change dramatically in the future.<BR>Please note: if the width of the wizard is small
+	* it is possible that the help button will NOT appear on screen! 	
 	* @param page the page number to display the supplied text
 	* @param txt[] the help text in a String array. Every line of text is an array element
 	*/
@@ -341,7 +346,8 @@ public class Wizard extends Frame
 		setLayout ( new BorderLayout());
 
 		setBackground(SystemColor.control);
-
+		setForeground(SystemColor.controlText);
+		
 		// set Navigation Panel
 		p_lower = new Panel ();
 		p_Nav = new Panel ();
@@ -364,11 +370,11 @@ public class Wizard extends Frame
 		p_Nav.add ( new Label (""));
 		p_Nav.add (b_Prev);
 		p_Nav.add (b_Next);
-		p_Nav.add ( new Label ("  "));
+		p_Nav.add ( new Label (""));
 		p_Nav.add (b_Finish);
 		p_Nav.add ( new Label (""));
 		p_Nav.add (b_Cancel);
-		p_Nav.add ( new Label ("  "));
+		p_Nav.add ( new Label (""));
 		p_Nav.add (b_Help);
 		
 		Canvas cv = new Canvas ();

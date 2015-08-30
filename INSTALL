@@ -15,14 +15,14 @@ etc.). Even more, if you are not able to compile these classes, you are not
 able to _use_ them.
 
 
-General Instructions on compilaion
-----------------------------------
+General Instructions on compilation
+-----------------------------------
 
   Now, some tips on how to compile these files. First of all you (may) need to
 define a classpath. There you're on your own - I managed to find a Java
 version which automatically detects the appropriate CLASSFILE value in Linux.
 In Windows the Sun JDK does this for you. In Linux JDK 1.1.6 does it too. So,
-JDK 1.1.6 is STRONGLY recommended.
+JDK 1.1.6 (or higher) is STRONGLY recommended.
 Second you have to compile all the classes one by one. Remember that some
 files need to be compiled first and then the others. Also remember that all
 files (except from WizardExec.class) belong to a package. So you have to
@@ -66,7 +66,7 @@ The steps to do are as follows:
 3) To run a demo of this package, type 'make demo'.
 4) To delete all source code and temporary files (including doc files), type 
    'make clean'.
-5) To create document informationtype 'make docs'.
+5) To create document information type 'make docs'.
 
 
 Winblow$ 95
@@ -82,6 +82,7 @@ The file "MAKE.BAT" exists in the src directory.
 For more information on he possible ways to use this batch file see the Linux
 section above.
 
+
 *************************
 * After the compilation *
 *************************
@@ -90,7 +91,7 @@ Remember that these files can't been executed as is. They are only useful
 from another application. So, don't forget to put them somewhere your java
 compiler and interprenter can read them. After the installation you can
 insert the wizard component to your application. To find out everything about
-the wizard methods, go to usage.html.
+the wizard methods, see USAGE.
 
 
 USAGE
@@ -100,14 +101,14 @@ As described already, this is NOT a stand-alone utility, is only a
 component.  To use it you have to program a "caller" application, or else you
 will not be able to use it. With this source file the "WizardExec.java" file
 is provided. This file is a sample sceleton source file, as an example on how
-to use this component. It is recomened to read the document of the Wizard
+to use this component. It is recomended to read the document of the Wizard
 class (see in docs directory - have to make docs first! -see above ) on a
 brief information on how to use this component. Usually you only have to
-"talk" to this class, not to other ones. WIzard component does it for you!
+"talk" to this class, not to other ones. Wizard component does it for you!
 
 
 Some Notes - READ ME !
-====================
+======================
 
 Some JDKs automatically add the current directory to the CLASSPATH. If this is
 your case you don't need to manually change your CLASSPATH.

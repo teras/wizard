@@ -50,7 +50,7 @@ echo Copying images...
 copy >nul: docfiles\*.gif ..\docs\images
 echo Copying HTML documents...
 copy >nul: docfiless\*.html ..\docs
-javadoc -d ..\docs Line3D.java WizardListener.java Wizard.java browseButton.java Msgbox.java WizardLayout.java wizButton.java wizImage.java wizPage.java
+javadoc -d ..\docs Line3D.java WizardListener.java Wizard.java browseButton.java Msgbox.java WizardLayout.java wizImage.java wizPage.java
 goto end
 
 :demo
@@ -60,7 +60,7 @@ goto end
 
 :stepwise
 %JC% Line3D.java
-%JC% WizardListener.java wizButton.java
+%JC% WizardListener.java
 %JC% WizardLayout.java
 %JC% Msgbox.java
 %JC% wizImage.java

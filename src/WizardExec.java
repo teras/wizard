@@ -5,10 +5,14 @@
 import java.awt.Choice;
 import java.awt.TextField;
 import java.awt.Label;
+import java.awt.Button;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 import panos.awt.browseButton;
 import panos.awt.Wizard;
 import panos.awt.WizardListener;
-import panos.awt.wizButton;
 
 //==============================================================================
 // Main Class for applet WizardExec
@@ -21,7 +25,7 @@ public class WizardExec implements WizardListener
 	TextField tfx;
 	browseButton bb;
 	Choice mc ;
-	wizButton wb1 ;
+	Button but2;
 	
 	Wizard myWiz;
 
@@ -63,19 +67,13 @@ public class WizardExec implements WizardListener
 		return 0;
 	}
 
-	// routine to handle the action buttons
-	public void performedAction (wizButton wb)
-	{
-		if ( wb == wb1)
-			System.out.println ("Action button 1 clicked !" );
-	}
 
 
 	// Create the user interface of the wizard
 	public void createWizard()
 	{
 
-		myWiz = new Wizard(this , 600, 300);
+		myWiz = new Wizard(this);
 		
 		mc= new Choice();
 		mc.addItem ("Jump to page #2.");
@@ -87,8 +85,9 @@ public class WizardExec implements WizardListener
 		bb = new browseButton ( );
 		bb.setFrame (myWiz);
 
-		wb1 = new wizButton (this, "Action button #1");
+		but2 = new Button ("Default action button");
 
+		
 		myWiz.setPages( 3 );
 		
 		
@@ -104,7 +103,7 @@ public class WizardExec implements WizardListener
 
 		myWiz.addItem ( 3, new Label ());
 		myWiz.addItem ( 3, new Label ("Click Finish to display the results"));
-		myWiz.addItem ( 3, wb1 );
+		myWiz.addItem (3, but2 );
 
 		myWiz.setFinish (  2 , true);
 	//	myWiz.addPicture ("images/demo1.gif");	// use either of these methods
@@ -113,11 +112,23 @@ public class WizardExec implements WizardListener
 		myWiz.addPicture (3, "images/demo3.gif");
 
 
-		String help1 [] = { "This is help for 1st page" };
+		String help1 [] = { "Select which will be the next page", "of this wizard or if it", "will continue in normal way" };
 		String help2 [] = { "This is help for", "the second page"};
 		myWiz.setHelpText (1, help1);
 		myWiz.setHelpText (2, help2);
 
+		myWiz.setTitle ("Wizard demo V 0.9.4");
+		
+		but2.addActionListener (new ActionListener ()
+		{ public void actionPerformed (ActionEvent evt)
+			{
+				clickedButton ();
+			}
+		} );
 	}
 
+	public void clickedButton ()
+	{
+		System.out.println ("Button clicked!");
+	}
 }

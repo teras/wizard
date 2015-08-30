@@ -1,5 +1,10 @@
 These are the changes of the wizard component
 
+30-Nov-98
+V 0.9.4  - WizardListener interface changed again :-( Also the wizButton
+           component is dropped. Some minor bugs fixed (not title displaying
+           in WizardExec, forgot to change foreground color etc.)
+
 23-Nov-98
 V 0.9.3  - WizardListener interface changed. Now interactive wizard is
            possible! Not anymore a serial data Wizard. Minor changed

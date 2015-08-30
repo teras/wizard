@@ -62,7 +62,7 @@ public class wizPage extends Panel
 		if (obj instanceof TextArea) pOptions.add((TextArea)obj);
 		if (obj instanceof Checkbox) pOptions.add((Checkbox)obj);
 		if (obj instanceof Choice) pOptions.add((Choice)obj);
-		if (obj instanceof wizButton) pOptions.add ((wizButton)obj);
+		if (obj instanceof Button) pOptions.add((Button)obj);
 		if (obj instanceof browseButton)
 		{
 			 browseButton bb = (browseButton)obj;
