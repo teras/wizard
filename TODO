@@ -6,13 +6,24 @@ This is my wishlist for the wizard component
 - change the event-driven notification system to a Listener-type one
     DONE 1/9/98
 
-- inform the parent application of every page change
-    DONE 2/9/98
-
 - add a help button for the specified page
     DONE 1/9/98
+
+- inform the parent application of every page change
+    DONE 2/9/98
 
 - ability to handle action butons in the wizard
     DONE 2/9/98
 
 - support applet image show
+    DONE 10/9/98
+
+- 3D line at the bottom of the wizard - spaces between the buttons
+    DONE 14/9/98
+
+- multiple images for every page
+    DONE 20/9/98
+    
+- ability to jump to any page (back & forth)
+
+- Swing compatible.

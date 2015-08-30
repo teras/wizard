@@ -64,8 +64,9 @@ public class WizardExec implements WizardListener
 
 
 	public void createWizard()
-	{
-		myWiz = new Wizard(this , 500, 500);
+	{
+
+		myWiz = new Wizard(this , 500, 300);
 		
 		mc= new Choice();
 		mc.addItem ("Choice number #1");
@@ -97,7 +98,10 @@ public class WizardExec implements WizardListener
 		myWiz.addItem ( 3, wb1 );
 
 		myWiz.setFinish (  2 , true);
-		myWiz.addPicture ("demo.gif");
+	//	myWiz.addPicture ("images/demo1.gif");	// use either of these methods
+		myWiz.addPicture (1, "images/demo1.gif");
+		myWiz.addPicture (2, "images/demo2.gif");
+		myWiz.addPicture (3, "images/demo3.gif");
 
 
 		String help1 [] = { "This is help for 1st page" };

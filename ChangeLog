@@ -1,4 +1,14 @@
-These are the major changes of the wizard component
+These are the changes of the wizard component
+
+14-Sep-98
+V 0.9.2  - Better user interface. Added a 3D line at the bottom of the
+           navigator buttons. Added space between some buttons. Every page can
+           have it's own picture. Dirty code for pictures.
+
+10-Sep-98
+V 0.9.1  - Now applet compatible. You can use the same code for applets and
+           applications. Added make-alike script (for compiling) for Winblow$
+           users. Never released.
 
 02-Sep-98
 V 0.9.0  - Almost all my wishlist is finished (see TODO file). If I manage to

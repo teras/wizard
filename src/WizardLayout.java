@@ -2,6 +2,10 @@ package panos.awt;
 
 import java.awt.*;
 
+/**
+* This is the layout manager for the wizard. Each element appears in a seperate line, which fully occupies it.<BR>
+* Thanks to JavaSoft for the original idea.
+*/
 public class WizardLayout
     implements LayoutManager
 {
