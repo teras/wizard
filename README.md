@@ -72,19 +72,16 @@ info (Btw thanks to GIMP for the construction of the gif files!).
 
 
 # Installation
-------------
 
-  Information for the installation is in the file 'INSTALL'.
+Information for the installation is in the file 'INSTALL'.
 
 
-Notes
------
+# Notes
 
-  The Wizard can't be closed with the "close" button of the window manager (or
+The Wizard can't be closed with the "close" button of the window manager (or
 the "X" button in win95). It SHOULD me closed either with "Cancel" or
 "Finish".
 
-     
 # **WARNING**
 
 This version is not compatible with older versions of this component.
