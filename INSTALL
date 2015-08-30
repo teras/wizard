@@ -7,7 +7,7 @@ directory - maybe you've  done this already.
   The classes of this package are all in source code. In the previous release
 all files (except from the WizardExec) was in compiled form. Now I decided to
 give out the source code for this project. This has some advantages and
-disadvantages. FIrst of all you have to compile on your own the files. If you
+disadvantages. First of all you have to compile on your own the files. If you
 are already a Java programmer this would be a piece of cake for you. On the
 other hand it's much easier for me to maintain and update only one thing (the
 source files) than 2 or more (e.g. source files, examples, compiled classes
@@ -32,6 +32,9 @@ missing arguments (e.g. "Class panos.awt.wizImage not found in type
 declaration.") then you should first compile the class which is complaining
 about (in our example the 'wizImage.java') and then recompile the previous
 file. When you've compiled everything, it's time to run the demo application.
+
+All the source code is found under the 'src' directory. The two directories
+below are support directories ('docfiles', 'images').
 
 Examples
 to compile: javac -d . wizImage.java
@@ -60,7 +63,7 @@ The steps to do are as follows:
 
 1) go to 'src' directory.
 2) Type 'make' or type 'make all' (without the ' of course! ).
-3) To run a demo of this package, type 'make run'.
+3) To run a demo of this package, type 'make demo'.
 4) To delete all source code and temporary files (including doc files), type 
    'make clean'.
 5) To create document informationtype 'make docs'.
@@ -118,6 +121,3 @@ code!
 
 Panos Katsaloulis
 teras@writeme.com
-
- 
-

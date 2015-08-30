@@ -28,7 +28,7 @@ install:
 	#     copy the *.class files wherever you want  #
 	#################################################
 
-run:
+demo:
 	${JVM} WizardExec
 	
 docs:

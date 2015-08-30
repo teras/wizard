@@ -19,10 +19,14 @@ public class wizPage extends Panel
 	*/
 	public String HelpText[]; // somewhere to store the help text of this page
 	
+	// somewhere to store the previous page, useful only with multi-paged wizards.
+	// defined as "friendly"
+	int prevPage;
+
 	/**
 	* True if wizard can end at this point, false if not.
 	* @see panos.awt.Wizard#setFinish
-		*/
+	*/
 	public boolean canFinish; // true if the "finish" button can be clicked in this page
 
 	private Frame f_Help; // Frame to display when clicking on Help button
@@ -31,8 +35,10 @@ public class wizPage extends Panel
 
 	/**
 	* Create a new wizard page.
+	* @param prPage which is the previous page. Useful only with interactive
+	* multi-paged wizards. Usually set just to previous page.
 	*/
-	public wizPage ()
+	public wizPage (int prPage)
 	{
 		pOptions = new Panel();
 		

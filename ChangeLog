@@ -1,5 +1,10 @@
 These are the changes of the wizard component
 
+23-Nov-98
+V 0.9.3  - WizardListener interface changed. Now interactive wizard is
+           possible! Not anymore a serial data Wizard. Minor changed
+           in other positions.
+
 14-Sep-98
 V 0.9.2  - Better user interface. Added a 3D line at the bottom of the
            navigator buttons. Added space between some buttons. Every page can

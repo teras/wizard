@@ -26,7 +26,7 @@ import panos.awt.Line3D;
 * shouldn't be used.<BR>
 *
 * @author Panos Katsaloulis
-* @version 0.9.2
+* @version 0.9.3
 */
 public class Wizard extends Frame
 {
@@ -36,7 +36,7 @@ public class Wizard extends Frame
 	*/
 	public int currentPage ; // which is the current page
 	
-	private Vector pages; //somewhere to store the pages of this wizard
+	private Vector v_pages; //somewhere to store the pages of this wizard
 	private Panel p_Card ; // panel for the wizard pages
 	private CardLayout cards ; // layout for the wizard pages
 	private Button b_Begin ; // buttin to go to the first card
@@ -60,7 +60,7 @@ public class Wizard extends Frame
 	*/
 	public Wizard (WizardListener apl) // default constructor
 	{
-		this(apl, 500, 300 );
+		this(apl, 600, 300 );
 	}
 	
 	
@@ -76,7 +76,7 @@ public class Wizard extends Frame
 	*/
 	public Wizard (WizardListener wl, int xLen, int yLen)
 	{
-		pages = new Vector(0,1);  // only one start page and then increasement +1
+		v_pages = new Vector(0,1);  // only one start page and then increasement +1
 		
 		// define the Panel for the Wizard Pages
 		// It MUST be defined here and not int create first, 
@@ -98,82 +98,99 @@ public class Wizard extends Frame
 
 		b_Begin.addActionListener (new ActionListener ()
 		{ public void actionPerformed (ActionEvent evt)
-			{ clickedBegin (evt); }
+			{
+				gotoPage ( 0, 1);
+			}
 		} );
  
 		b_Prev.addActionListener (new ActionListener ()
 		{ public void actionPerformed (ActionEvent evt)
-			{ clickedPrev (evt); }
+			{
+				wizPage wp;
+
+				wp = (wizPage)v_pages.elementAt (currentPage-1);
+				gotoPage ( 0, wp.prevPage );
+			}
 		} );
  
 		b_Next.addActionListener (new ActionListener ()
 		{ public void actionPerformed (ActionEvent evt)
-			{ clickedNext (evt); }
+			{
+				int next_page;
+
+				next_page = caller.nextPage ( currentPage );
+				if (next_page == 0) next_page = currentPage + 1;
+				gotoPage ( currentPage, next_page);
+			}
 		} );
  
 		b_Finish.addActionListener (new ActionListener ()
 		{ public void actionPerformed (ActionEvent evt)
-			{ clickedFinish (evt); }
+			{
+				hideWizard();
+				caller.exitWizard( true );
+			}
 		} );
  
 		b_Cancel.addActionListener (new ActionListener ()
 		{ public void actionPerformed (ActionEvent evt)
-			{ clickedCancel (evt); }
+			{
+				hideWizard ();
+				caller.exitWizard ( false );
+			}
 		} );
  
 		b_Help.addActionListener (new ActionListener ()
 		{ public void actionPerformed (ActionEvent evt)
-			{ clickedHelp (evt); }
+			{
+				displayHelp ();
+			}
 		} );
 	}
-
-
-	// Now begin the various handling routines for every button
 	
-	private void clickedBegin (ActionEvent ev)
-	{
-		cards.first(p_Card); 
-		 currentPage = 1; 
-		setButtons ( currentPage ); 
-		caller.changedPage( currentPage ); 
-	}
 
-	private void clickedPrev (ActionEvent ev)
-	{
-		cards.previous(p_Card); 
-		currentPage --; 
-		setButtons ( currentPage ); 
-		caller.changedPage( currentPage ); 
-	}
-
-	private void clickedNext (ActionEvent ev)
-	{
-		cards.next(p_Card);
-		currentPage ++; 
-		setButtons ( currentPage );
-		caller.changedPage( currentPage ); 
-	}
-
-	private void clickedFinish (ActionEvent ev)
-	{
-		setVisible(false);
-		dispose(); 
-		caller.clickedFinish();
-	}
-
-	private void clickedCancel (ActionEvent ev)
-	{
-		setVisible(false); 
-		dispose(); 
-		caller.clickedCancel(); 
-	}
-
-	private void clickedHelp (ActionEvent ev)
+	private void displayHelp ()
 	{
 		wizPage wp;
-		String title = "Help for wizard page #" + currentPage;
-		wp = (wizPage)pages.elementAt (currentPage-1);
-		Msgbox msg = new Msgbox (this, title , wp.HelpText );
+		String title = "Help for wizard page #" + currentPage; 
+		wp = (wizPage)v_pages.elementAt (currentPage-1); 
+		Msgbox msg = new Msgbox ((Frame)this, title , wp.HelpText ); 
+	}		
+
+
+	/**
+	* Use this method ONLY if you want to jump to another page that
+	* the next one. It is used for interactive navigation only.
+	* @param newPage the number of the page number to jump to. First page has
+	* number 1.
+	* @param oldPage the number of the previous page number ( to go back when the
+	* the Previous button is clicked). If equals zero, not changes have been done
+	* (this means that it keeps the previous situation of the "Previous" button of this page).
+	*  <BR><BR>
+	* Warning : if you want to use this wizard in the normal way (e.g. collect
+	* information in a serial way) you don't ever need to use this method. On the
+	* other hand, if you want to interactively jump to a special page, use this method.
+	* For example, if you want to have some options and jump to a special page
+	* every time the user selects a special option, then that's what you can do:
+	* <BR> 1. "Trap" the nextPage method in your caller application.
+	* <BR> 2. Check if the old page (current) is the one wanted to interact ( the user
+	* pressed the "Next" button).
+	* <BR> 3. Read the value of the option component.
+	* <BR> 4. Return the new page number. Wizard will automatically jump there.
+	*/
+	public void gotoPage ( int oldPage, int newPage )
+	{
+		wizPage wp;
+
+		if ( newPage > pages() || oldPage > pages() || newPage <=0 || oldPage <0 ) return;
+		cards.show (p_Card, "WizPage" + newPage);
+		setButtons ( newPage );
+		currentPage = newPage ;
+		if (oldPage > 0 )
+		{
+			wp = (wizPage)v_pages.elementAt( newPage -1);
+			wp.prevPage = oldPage;
+		}
 	}
 
 
@@ -184,7 +201,7 @@ public class Wizard extends Frame
 		if ( page < pages() )	b_Next.setEnabled(true);	else	b_Next.setEnabled(false);
 		if ( page > 1)			b_Prev.setEnabled(true);	else	b_Prev.setEnabled(false);
 		if ( page > 1)			b_Begin.setEnabled(true); 	else	b_Begin.setEnabled(false);
-		wizPage wp = (wizPage)pages.elementAt(page-1);
+		wizPage wp = (wizPage)v_pages.elementAt(page-1);
 		if ( wp.canFinish )		b_Finish.setEnabled(true);	else	b_Finish.setEnabled(false);
 	}
 
@@ -208,7 +225,7 @@ public class Wizard extends Frame
 	{
 		wizPage wp;
 		if ( !existsPage (page) ) return; // exit if this page don't exists
-		wp = (wizPage)pages.elementAt(page-1);
+		wp = (wizPage)v_pages.elementAt(page-1);
 		wp.canFinish = finish;
 	}		
 
@@ -223,7 +240,7 @@ public class Wizard extends Frame
 	{
 		wizPage wp;
 		if ( ! existsPage (page) ) return; // exit if this page don't exists
-		wp = (wizPage)pages.elementAt (page-1);
+		wp = (wizPage)v_pages.elementAt (page-1);
 		wp.HelpText = txt;
 	}
 
@@ -264,9 +281,9 @@ public class Wizard extends Frame
 	*/
 	public void addPage ()
 	{
-		pages.addElement (new wizPage ()); // page at end
+		v_pages.addElement (new wizPage ( pages()));
 		int pos = pages();
-		p_Card.add( "WizPage" + pos , (Panel)pages.elementAt (pos-1) ); // store the card data for this page
+		p_Card.add( "WizPage" + pos , (Panel)v_pages.elementAt (pos-1) ); // store the card data for this page
 	}
 
 
@@ -277,7 +294,7 @@ public class Wizard extends Frame
 	*/
 	public int pages ()
 	{
-		return pages.size();		
+		return v_pages.size();		
 	}
 
 	
@@ -307,7 +324,7 @@ public class Wizard extends Frame
 		if ( existsPage (page) == false ) return null ; // exit if this page don't exists
 		else
 		{
-			wp = (wizPage)pages.elementAt(page-1);
+			wp = (wizPage)v_pages.elementAt(page-1);
 			return wp.getPanel();
 		}
 	}
@@ -386,7 +403,7 @@ public class Wizard extends Frame
 	{
 		wizPage cpage ;
 		if ( existsPage (pag) == false ) return; // exit if this page don't exists
-		cpage = (wizPage)pages.elementAt(pag-1); // first page is 0, so we must substract
+		cpage = (wizPage)v_pages.elementAt(pag-1); // first page is 0, so we must substract
 		cpage.addItem(obj);
 	}
 	
@@ -407,7 +424,7 @@ public class Wizard extends Frame
 		wizPage cpage ;
 		if ( ! existsPage (pag))
 			return; // exit if this page don't exists
-		cpage = (wizPage)pages.elementAt(pag-1); // first page is 0, so we must substract
+		cpage = (wizPage)v_pages.elementAt(pag-1); // first page is 0, so we must substract
 		cpage.addPicture(s_pic, this, caller);//support with information such as the frame to be redrawn & the (possible) caller applet
 	}
 
@@ -438,7 +455,7 @@ public class Wizard extends Frame
 		wizPage wp ;
 		super.setVisible(true);
 
-		wp = (wizPage)pages.lastElement (); // get last page
+		wp = (wizPage)v_pages.lastElement (); // get last page
 		wp.canFinish = true ; // last page can be "Finish"-ed
 
 		cards.first(p_Card);
@@ -446,4 +463,15 @@ public class Wizard extends Frame
 		setButtons ( currentPage );
 	}
 
+		
+	/**
+	* Use this method to cleanly hide this wizard. <BR>
+	* If you exit the wizard with the "Cancel" or "Finish" button you don't
+	* need to call this method. This is ONLY for interactive wizard usage.
+	*/
+	public void hideWizard ()
+	{
+		setVisible(false);
+		dispose(); 
+	}
 }

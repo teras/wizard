@@ -28,50 +28,59 @@ public class WizardExec implements WizardListener
 	// constructor if this class
 	public WizardExec(){}
 
-	public void clickedFinish()
+
+ 	// Application starts here
+	public static void main(String argv[])  
+	{ 
+		WizardExec me = new WizardExec(); 
+		me.createWizard(); 
+		me.myWiz.displayWizard();  
+	} 
+ 
+
+	// routine to handle the exit of a wizard
+	public void exitWizard(boolean finish)
 	{
-		String tempOut = mc.getSelectedItem() + " - " + tfx.getText() + " - " +bb.getFilename (); 
-		System.out.println (tempOut);
+		if (finish)
+		{
+			System.out.println (mc.getSelectedItem() + " - " + tfx.getText() + " - " +bb.getFilename ());
+		}
+		else
+		{
+			System.out.println ("Cancel clicked"); 
+		}
 		System.exit(0); 
 	}
 
-	public void clickedCancel()
+	// routine to handle advance page action
+	public int nextPage ( int pg )
 	{
-		System.out.println ("Cancel clicked");
-		System.exit(0); 
+		if (pg == 1)
+		{
+			if ( mc.getSelectedIndex() == 0 ) return 2;
+			if ( mc.getSelectedIndex() == 1 ) return 3;
+		}
+		return 0;
 	}
 
-	public void changedPage ( int pg )
-	{
-		System.out.println ("Page changed: page number is " + pg );
-	}
-
+	// routine to handle the action buttons
 	public void performedAction (wizButton wb)
 	{
 		if ( wb == wb1)
 			System.out.println ("Action button 1 clicked !" );
 	}
+
 
-
-
-	public static void main(String argv[]) 
-	{
-		WizardExec me = new WizardExec();
-		me.createWizard();
-		me.myWiz.displayWizard(); 
-	}
-
-
-
+	// Create the user interface of the wizard
 	public void createWizard()
 	{
 
-		myWiz = new Wizard(this , 500, 300);
+		myWiz = new Wizard(this , 600, 300);
 		
 		mc= new Choice();
-		mc.addItem ("Choice number #1");
-		mc.addItem ("Choice number #2");
-		mc.addItem ("Choice number #3");
+		mc.addItem ("Jump to page #2.");
+		mc.addItem ("Jump to page #3.");
+		mc.addItem ("Go normal.");
 		
 		tfx = new TextField (30);
 

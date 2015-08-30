@@ -1,0 +1,13 @@
+This file has been made to help simple users to compile and run quickly a
+simple Wizard component, so that they could test for themselfs this component.
+
+Step                     Linux                    Windows
+-----------------------+------------------------+---------------------------
+Unarch                 | tar zxvf wizard.*.gz   | //double click on the icon
+Goto source directory  | cd src                 | cd src
+By hand compile        | javac -d . *.java      | javac -d . *.java
+ (or Auto-compile)     | make                   | make
+Run a demo             | java WizardExec        | java WizardExec
+ (or Auto-demo)        | make demo              | make demo
+-----------------------+------------------------+---------------------------
+

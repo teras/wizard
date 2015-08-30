@@ -15,14 +15,14 @@ if "%1%" == "" goto all
 if "%1%" == "all" goto all
 if "%1%" == "stepwise" goto stepwise
 if "%1%" == "clean" goto clean
-if "%1%" == "run" goto run
-if "%1%" == "doc" goto docs
+if "%1%" == "demo" goto demo
+if "%1%" == "docs" goto docs
 goto error
 
 
 
 :error
-echo Please select all/doc/stepwise/clean/run
+echo Please select all/docs/stepwise/clean/demo
 goto end
 
 :all
@@ -53,7 +53,7 @@ copy >nul: docfiless\*.html ..\docs
 javadoc -d ..\docs Line3D.java WizardListener.java Wizard.java browseButton.java Msgbox.java WizardLayout.java wizButton.java wizImage.java wizPage.java
 goto end
 
-:run
+:demo
 java WizardExec
 goto end
 

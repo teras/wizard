@@ -10,20 +10,20 @@ package panos.awt;
 public interface WizardListener
 {
 	/** 
-	* This method is called when the Finish button is clicked.
+	* This method is called when the Finish or the Cancel button is clicked.
+	* @param status true if the Finish button is clicked, false if the Cancel
+	* button is clicked.
 	*/
-	public void clickedFinish ();
+	public void exitWizard (boolean finished);
 
-	/** 
-	* This method is called when the Cancel button is clicked.
-	*/
-	public void clickedCancel ();
-	
 	/**
-	* This method is called every time the Wizard changes the current page.
-	* @param pg the new page number (first page has pagenumber 1)
+	* This method is called every time the Next button is clicked.
+	* @param pg the old page number (first page has pagenumber 1).
+	* @return the new page to jump. It should equal 0, or the wizard will jump to
+	* the specified page.
+	* @see panos.awt.Wizard#gotoPage
 	*/	
-	public void changedPage( int pg );
+	public int nextPage( int pg );
 	
 	/** This method is called when a wizButton is clicked
 	*
